@@ -1,0 +1,8 @@
+{
+  "name": "Arata Price AI",
+  "description": "Kalkulator estimasi biaya jasa 3D Printing (PLA+, PETG, Resin) dan Laser Engraving Arata Price AI yang cepat, cerdas, dan akurat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
