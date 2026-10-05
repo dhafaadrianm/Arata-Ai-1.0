@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, QrCode, Copy, Check, ExternalLink, ShieldCheck, Download, AlertCircle, Phone } from 'lucide-react';
+import { X, QrCode, Copy, Check, ShieldCheck, Download, Info, Phone } from 'lucide-react';
 import { formatRupiah } from '../utils/calculator';
 
 interface QRISModalProps {
@@ -37,198 +37,143 @@ export const QRISModal: React.FC<QRISModalProps> = ({
     setTimeout(() => setCopiedPhone(false), 2000);
   };
 
-  const waUrl = `https://wa.me/6285904408774?text=${encodeURIComponent(
-    `Halo Arata Price AI, saya sudah melakukan pembayaran via QRIS${
-      totalAmount ? ` sebesar ${formatRupiah(totalAmount)}` : ''
-    }. Berikut saya lampirkan bukti pembayaran dan file untuk diproses.`
-  )}`;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full my-auto shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col max-h-[92vh] transition-colors">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md overflow-y-auto">
+      <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-md w-full my-auto shadow-2xl border border-black/[0.08] dark:border-white/[0.1] overflow-hidden flex flex-col max-h-[92vh] transition-colors">
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-slate-850 dark:to-indigo-950/30">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-xs">
-              <QrCode className="w-5 h-5" />
+        <div className="p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-2xl bg-black/[0.04] dark:bg-white/[0.08] flex items-center justify-center text-neutral-900 dark:text-white">
+              <QrCode className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base flex items-center gap-1.5">
-                <span>Pembayaran QRIS</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-800">
-                  Resmi
-                </span>
+              <h3 className="font-semibold text-neutral-900 dark:text-white text-base">
+                Pembayaran QRIS
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                {merchantName} • NMID: {nmid}
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                {merchantName} · NMID {nmid}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-800 transition-colors cursor-pointer"
-            aria-label="Tutup Modal"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors cursor-pointer"
+            aria-label="Tutup"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Notice Banner inside Modal */}
-        <div className="bg-amber-50/90 dark:bg-amber-950/40 border-b border-amber-200/80 dark:border-amber-800/60 px-4 py-2.5 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2">
-          <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-          <p className="leading-snug">
-            <strong>Perhatian:</strong> Ini adalah tarif hemat khusus jika Anda pesan <strong>di luar marketplace seperti Shopee</strong>. Pembayaran bisa via QRIS di bawah lalu konfirmasi ke nomor <strong>{phoneNumber}</strong>.
-          </p>
-        </div>
-
-        {/* Modal Scrollable Body */}
-        <div className="p-4 sm:p-5 overflow-y-auto space-y-4 text-xs">
-          {/* Amount to pay badge if available */}
+        {/* Scrollable Body */}
+        <div className="p-5 overflow-y-auto space-y-4 text-xs">
+          {/* Amount Badge */}
           {totalAmount !== undefined && totalAmount > 0 && (
-            <div className="p-3 bg-slate-900 text-white rounded-xl flex items-center justify-between shadow-inner border border-slate-800">
-              <span className="text-slate-300 font-medium">Total yang harus dibayar:</span>
-              <span className="font-mono font-extrabold text-emerald-400 text-base sm:text-lg">
+            <div className="p-4 bg-black/[0.02] dark:bg-white/[0.04] rounded-2xl border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+              <span className="text-neutral-500 dark:text-neutral-400 font-medium">
+                Total Pembayaran
+              </span>
+              <span className="font-mono font-bold text-neutral-900 dark:text-white text-lg sm:text-xl">
                 {formatRupiah(totalAmount)}
               </span>
             </div>
           )}
 
-          {/* QR Code Card Display matching the official QRIS standee */}
-          <div className="bg-white rounded-2xl border-2 border-slate-200 p-5 shadow-sm text-center flex flex-col items-center">
-            {/* Header branding */}
-            <div className="w-full flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
-              <div className="flex items-center gap-2">
-                <span className="font-black tracking-tighter text-slate-950 text-base">
-                  QRIS
-                </span>
-                <span className="text-[10px] font-semibold text-slate-500 leading-tight text-left hidden sm:inline-block">
-                  QR Code Standar<br />Pembayaran Nasional
-                </span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="font-extrabold text-red-600 text-sm tracking-wider">
-                  GPN
-                </span>
-              </div>
-            </div>
-
-            <div className="mb-2">
-              <h4 className="font-black text-slate-900 text-lg tracking-wide">
+          {/* QR Code Card */}
+          <div className="bg-white rounded-3xl border border-black/[0.08] p-5 shadow-sm text-center flex flex-col items-center">
+            <div className="w-full flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
+              <span className="font-bold text-neutral-900 text-xs tracking-wider">
+                QRIS INDONESIA
+              </span>
+              <span className="text-[11px] font-semibold text-neutral-500">
                 {merchantName}
-              </h4>
-              <p className="text-xs text-slate-600 font-mono font-medium">
-                NMID: {nmid}
-              </p>
-              <p className="text-[11px] text-slate-400 font-mono mt-0.5">
-                A01
-              </p>
+              </span>
             </div>
 
-            {/* QR Image Container (exact 250x250 format) */}
-            <div className="relative p-3 bg-white rounded-2xl border-2 border-slate-100 shadow-inner max-w-[274px] mx-auto flex items-center justify-center">
+            <div className="p-2 bg-white rounded-2xl border border-black/[0.06] my-1">
               <img
                 src={qrisQrApiUrl}
-                alt="QRIS REXEL ID"
-                width={250}
-                height={250}
-                className="w-[250px] h-[250px] object-contain mx-auto block rounded-lg"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.src = '/qris.png';
-                }}
+                alt="QRIS Pembayaran Resmi Arata REXEL ID"
+                className="w-56 h-56 object-contain"
+                loading="lazy"
               />
             </div>
 
-            <div className="mt-3.5 space-y-0.5">
-              <p className="text-xs font-black text-slate-900 tracking-wider uppercase">
-                SATU QRIS UNTUK SEMUA
-              </p>
-              <p className="text-[11px] text-slate-500 leading-normal">
-                Bisa di-scan pakai GoPay, OVO, Dana, BCA, Mandiri, ShopeePay, dll.
-              </p>
-              <p className="text-[10px] text-slate-400">
-                Dicetak oleh: 93600914 • Cek di: www.aspi-qris.id
-              </p>
-            </div>
+            <span className="text-[11px] text-neutral-400 mt-2">
+              Scan dengan GoPay, OVO, Dana, BCA, Mandiri, BRI, dll
+            </span>
           </div>
 
-          {/* Quick Copy Action Badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {/* Non-marketplace Note */}
+          <div className="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] space-y-1 text-[11px] text-neutral-500 dark:text-neutral-400">
+            <div className="flex items-center gap-1.5 font-medium text-neutral-900 dark:text-white">
+              <Info className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+              <span>Ketentuan Pesanan Non-Marketplace</span>
+            </div>
+            <p className="leading-relaxed">
+              Ini adalah harga khusus di luar platform seperti Shopee. Setelah melakukan transfer, silakan kirimkan bukti pembayaran dan file desain ke WhatsApp <strong>{phoneNumber}</strong>.
+            </p>
+          </div>
+
+          {/* Copy info buttons */}
+          <div className="grid grid-cols-2 gap-2 pt-1">
             <button
               type="button"
               onClick={handleCopyNmid}
-              className="py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-medium text-[11px] flex items-center justify-between transition-colors cursor-pointer border border-slate-200/60 dark:border-slate-700"
+              className="p-2.5 rounded-2xl bg-black/[0.03] dark:bg-white/[0.06] hover:bg-black/[0.06] dark:hover:bg-white/[0.1] text-neutral-800 dark:text-neutral-200 flex items-center justify-center gap-1.5 font-medium cursor-pointer transition-colors"
             >
-              <span className="truncate">NMID: {nmid}</span>
               {copiedNmid ? (
-                <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 shrink-0 ml-1">
-                  <Check className="w-3.5 h-3.5" /> Disalin
-                </span>
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>NMID Tersalin</span>
+                </>
               ) : (
-                <Copy className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0 ml-1" />
+                <>
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Salin NMID</span>
+                </>
               )}
             </button>
 
             <button
               type="button"
               onClick={handleCopyPhone}
-              className="py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-medium text-[11px] flex items-center justify-between transition-colors cursor-pointer border border-slate-200/60 dark:border-slate-700"
+              className="p-2.5 rounded-2xl bg-black/[0.03] dark:bg-white/[0.06] hover:bg-black/[0.06] dark:hover:bg-white/[0.1] text-neutral-800 dark:text-neutral-200 flex items-center justify-center gap-1.5 font-medium cursor-pointer transition-colors"
             >
-              <span className="truncate">WA: {phoneNumber}</span>
               {copiedPhone ? (
-                <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 shrink-0 ml-1">
-                  <Check className="w-3.5 h-3.5" /> Disalin
-                </span>
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>No. Tersalin</span>
+                </>
               ) : (
-                <Copy className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0 ml-1" />
+                <>
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Salin No. WA</span>
+                </>
               )}
             </button>
           </div>
-
-          {/* 4 Steps Instructions */}
-          <div className="p-3.5 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-700 space-y-2">
-            <h5 className="font-bold text-slate-800 dark:text-slate-200 text-xs flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              Langkah Pembayaran & Konfirmasi:
-            </h5>
-            <ol className="list-decimal list-inside space-y-1 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-              <li>
-                Buka aplikasi perbankan digital atau e-wallet apa saja berlogo QRIS.
-              </li>
-              <li>
-                Scan kode QRIS di atas dan periksa nama merchant: <strong>{merchantName}</strong>.
-              </li>
-              <li>
-                Ketik nominal transfer{totalAmount ? ` (${formatRupiah(totalAmount)})` : ''} lalu selesaikan pembayaran.
-              </li>
-              <li>
-                Screenshot bukti transfer, lalu kirimkan konfirmasi via WhatsApp ke nomor <strong className="text-emerald-600 dark:text-emerald-400">{phoneNumber}</strong>.
-              </li>
-            </ol>
-          </div>
         </div>
 
-        {/* Footer Actions */}
-        <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 flex flex-col sm:flex-row items-center gap-2">
-          <a
-            href={qrisQrApiUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            download="QRIS_REXEL_ID.png"
-            className="w-full sm:w-auto py-2.5 px-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-center"
+        {/* Modal Footer */}
+        <div className="p-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3">
+          <button
+            onClick={onClose}
+            className="w-full py-2.5 rounded-2xl bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-neutral-700 dark:text-neutral-300 font-medium text-xs cursor-pointer transition-colors"
           >
-            <Download className="w-3.5 h-3.5" />
-            <span>Unduh / Buka Gambar QRIS</span>
-          </a>
-
+            Tutup
+          </button>
           <a
-            href={waUrl}
+            href={`https://wa.me/6285904408774?text=${encodeURIComponent(
+              `Halo Arata Price AI, saya sudah melakukan pembayaran via QRIS${
+                totalAmount ? ` sebesar ${formatRupiah(totalAmount)}` : ''
+              }. Mohon verifikasi bukti pembayaran saya.`
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all text-center"
+            className="w-full py-2.5 rounded-2xl bg-[#0071E3] hover:bg-[#0077ED] text-white font-medium text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
           >
             <Phone className="w-3.5 h-3.5" />
-            <span>Konfirmasi ke WhatsApp ({phoneNumber})</span>
+            <span>Konfirmasi WA</span>
           </a>
         </div>
       </div>

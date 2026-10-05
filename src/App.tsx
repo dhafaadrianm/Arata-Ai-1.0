@@ -21,7 +21,7 @@ import { WhatsAppModal } from './components/WhatsAppModal';
 import { GuideModal } from './components/GuideModal';
 import { QRISModal } from './components/QRISModal';
 import { ArataLogo } from './components/ArataLogo';
-import { Check, ShieldCheck, Zap, Sparkles, QrCode, Phone, AlertCircle } from 'lucide-react';
+import { Check, ShieldCheck, QrCode, Phone, Info, ArrowUpRight } from 'lucide-react';
 
 export default function App() {
   // State for selected material
@@ -113,7 +113,7 @@ export default function App() {
   // Add current calculated item to cart
   const handleAddToCart = () => {
     setCartItems((prev) => [...prev, { ...calculatedResult }]);
-    showToast(`"${calculatedResult.fileName}" berhasil ditambahkan ke daftar!`);
+    showToast(`"${calculatedResult.fileName}" ditambahkan ke daftar pesanan`);
   };
 
   const handleRemoveCartItem = (index: number) => {
@@ -180,16 +180,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col font-sans text-slate-800 dark:text-slate-100 selection:bg-indigo-100 selection:text-indigo-900 transition-colors">
-      {/* Toast notification banner */}
+    <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#000000] flex flex-col font-sans text-neutral-900 dark:text-neutral-100 selection:bg-[#0071E3]/20 selection:text-[#0071E3] transition-colors">
+      {/* Dynamic Island Style Toast */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-slate-900 dark:bg-slate-800 text-white px-4 py-3 rounded-xl shadow-lg border border-slate-700 dark:border-slate-600 flex items-center gap-2 text-xs font-semibold animate-bounce">
-          <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-black/90 dark:bg-white/95 text-white dark:text-black px-4 py-2 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.15)] flex items-center gap-2 text-xs font-medium backdrop-blur-md">
+          <Check className="w-3.5 h-3.5 text-emerald-400 dark:text-emerald-600 shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Top Navigation */}
+      {/* Apple-style Navigation */}
       <Navbar
         onOpenGuide={() => setIsGuideModalOpen(true)}
         onOpenQRIS={() => setIsQRISModalOpen(true)}
@@ -198,50 +198,50 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
-        {/* Intro banner */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold border border-indigo-200/50 dark:border-indigo-800/60 mb-1">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span>Kalkulator Cepat & Transparan</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Hitung Biaya Cetak 3D & Laser Engraving
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">
-              Pilih material, masukkan ukuran file seperti di slicer, dan dapatkan kalkulasi harga otomatis secara transparan. Siap kirim langsung ke WhatsApp.
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
+        {/* Apple Clean Hero Section */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+          <div className="space-y-1.5 max-w-2xl">
+            <span className="text-[11px] font-semibold tracking-wider uppercase text-neutral-400 dark:text-neutral-500">
+              Kalkulator Jasa Manufaktur Presisi
+            </span>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+              Hitung Biaya 3D Printing & Laser Engraving.
+            </h1>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed pt-1">
+              Pilih material filamen atau grafir, masukkan ukuran model seperti di software slicer, dan dapatkan kalkulasi harga transparan seketika.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0 self-start md:self-auto">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
               onClick={() => setIsGuideModalOpen(true)}
-              className="px-4 py-2.5 rounded-xl text-xs font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-slate-750 transition-colors border border-indigo-200/60 dark:border-slate-700 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium text-neutral-800 dark:text-neutral-200 bg-white dark:bg-[#1C1C1E] hover:bg-neutral-100 dark:hover:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs transition-all cursor-pointer"
             >
-              Lihat Panduan Bahan
+              <span>Panduan Bahan</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
             </button>
           </div>
         </div>
 
-        {/* Non-marketplace & QRIS Payment Note Banner */}
-        <div className="bg-gradient-to-r from-amber-50 via-orange-50/60 to-amber-50 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-amber-950/30 rounded-2xl border border-amber-200 dark:border-amber-800/60 p-4 sm:p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500 dark:bg-amber-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-              <AlertCircle className="w-5 h-5" />
+        {/* Clean Apple Callout: Direct Non-Marketplace Advantage */}
+        <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl border border-black/[0.06] dark:border-white/[0.08] p-5 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors">
+          <div className="flex items-start gap-3.5">
+            <div className="w-9 h-9 rounded-2xl bg-black/[0.03] dark:bg-white/[0.06] flex items-center justify-center shrink-0 mt-0.5 text-neutral-800 dark:text-neutral-200">
+              <Info className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-slate-900 dark:text-amber-100 text-sm sm:text-base">
-                  Pemesanan Langsung Non-Marketplace
+                <span className="font-semibold text-neutral-900 dark:text-white text-sm">
+                  Tarif Langsung Non-Marketplace
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[10px] font-bold border border-emerald-200 dark:border-emerald-800">
-                  Lebih Hemat
+                <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  Hemat Biaya Layanan
                 </span>
               </div>
-              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-3xl">
-                <strong>Catatan:</strong> Ini adalah harga jika Anda pesan <strong>di luar marketplace seperti Shopee</strong>. Pembayaran bisa pakai <strong>QRIS (REXEL ID)</strong> lalu konfirmasi ke nomor <strong>085904408774</strong>.
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-2xl">
+                Harga pada kalkulator ini adalah pesanan langsung di luar platform marketplace. Pembayaran dapat dilakukan via <strong>QRIS (REXEL ID)</strong> lalu konfirmasi ke nomor <strong>085904408774</strong>.
               </p>
             </div>
           </div>
@@ -250,32 +250,32 @@ export default function App() {
             <button
               type="button"
               onClick={() => setIsQRISModalOpen(true)}
-              className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-neutral-800 dark:text-neutral-200 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.07] dark:hover:bg-white/[0.12] border border-black/[0.04] dark:border-white/[0.08] transition-all cursor-pointer"
             >
-              <QrCode className="w-4 h-4" />
-              <span>Lihat Kode QRIS</span>
+              <QrCode className="w-3.5 h-3.5 text-neutral-600 dark:text-neutral-300" />
+              <span>Kode QRIS</span>
             </button>
             <a
               href="https://wa.me/6285904408774?text=Halo%20Arata%20Price%20AI,%20saya%20mau%20konfirmasi%20pemesanan%20di%20luar%20marketplace"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-100 dark:bg-emerald-950 hover:bg-emerald-200 dark:hover:bg-emerald-900 transition-colors border border-emerald-300 dark:border-emerald-800 flex items-center gap-1.5"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-white bg-[#0071E3] hover:bg-[#0077ED] transition-all shadow-xs"
             >
-              <Phone className="w-4 h-4" />
-              <span>Konfirmasi (085904408774)</span>
+              <Phone className="w-3.5 h-3.5" />
+              <span>Konfirmasi WA</span>
             </a>
           </div>
         </div>
 
-        {/* Quick Presets Bar */}
+        {/* Quick Presets Carousel */}
         <QuickPresets onSelectPreset={handleSelectPreset} />
 
-        {/* Main Grid Section */}
+        {/* Main Configuration Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Column: Config & Slicer inputs (7 cols) */}
+          {/* Left Column: Slicer & Inputs (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             {/* Step 1: Material Selector */}
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-xs transition-colors">
+            <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl border border-black/[0.06] dark:border-white/[0.08] p-5 sm:p-7 shadow-[0_2px_12px_rgba(0,0,0,0.03)] transition-colors">
               <MaterialSelector
                 materials={MATERIALS}
                 selectedId={selectedMaterialId}
@@ -283,7 +283,7 @@ export default function App() {
               />
             </div>
 
-            {/* Step 2: Simplified Slicer / Dimension Input */}
+            {/* Step 2: Calculator */}
             {currentMaterial.category === '3d_print' ? (
               <SlicerCalculator
                 material={currentMaterial}
@@ -302,7 +302,7 @@ export default function App() {
               />
             )}
 
-            {/* Cart / Multi-part List if items exist */}
+            {/* Cart / Saved List */}
             <CartList
               items={cartItems}
               onRemoveItem={handleRemoveCartItem}
@@ -312,7 +312,7 @@ export default function App() {
             />
           </div>
 
-          {/* Right Column: Price Summary Card & Sticky Totals (5 cols) */}
+          {/* Right Column: Price Summary Card (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
             <PriceSummaryCard
               result={calculatedResult}
@@ -322,126 +322,120 @@ export default function App() {
               onUpdateQuantity={handleUpdateCurrentQuantity}
             />
 
-            {/* Quality & Service Trust Badges */}
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-2xs space-y-2.5 text-xs text-slate-600 dark:text-slate-300 transition-colors">
-              <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-200">
-                <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                <span>Standar Mutu Layanan Arata</span>
+            {/* Trust Standard Box in Apple Minimalist Style */}
+            <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3 transition-colors text-xs text-neutral-500 dark:text-neutral-400">
+              <div className="flex items-center gap-2 font-semibold text-neutral-900 dark:text-white">
+                <ShieldCheck className="w-4 h-4 text-[#0071E3] dark:text-[#0A84FF]" />
+                <span>Standar Mutu Manufaktur Arata</span>
               </div>
-              <ul className="space-y-1.5 text-[11px] text-slate-500 dark:text-slate-400 pl-6 list-disc">
-                <li>Bahan filamen & resin original berkualitas tinggi.</li>
-                <li>Mesin terkalibrasi presisi dengan toleransi dimensi rapi.</li>
-                <li>Pengecekan kelayakan file 3D sebelum proses pencetakan.</li>
-                <li>Packing aman & bubble wrap tebal untuk pengiriman.</li>
+              <ul className="space-y-1.5 text-[11px] pl-5 list-disc leading-relaxed">
+                <li>Material filament & resin original berstandar industri presisi.</li>
+                <li>Kalibrasi mesin otomatis dengan toleransi dimensi rapi.</li>
+                <li>Pemeriksaan kelayakan geometri 3D sebelum proses pencetakan.</li>
+                <li>Pengemasan aman berlapis untuk proteksi pengiriman.</li>
               </ul>
             </div>
           </div>
         </div>
       </main>
 
-      {/* Sticky Mobile Bottom Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-2.5 shadow-lg flex items-center justify-between gap-3 transition-colors">
-        <div className="min-w-0">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Estimasi:</span>
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-300 font-mono">
-              ({calculatedResult.quantity} pcs)
-            </span>
+      {/* Floating Apple-Style Mobile Bottom Bar */}
+      <div className="lg:hidden fixed bottom-3 left-3 right-3 z-40 bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-xl border border-black/[0.08] dark:border-white/[0.1] rounded-2xl p-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] flex items-center justify-between gap-3 transition-colors">
+        <div className="min-w-0 pl-1">
+          <div className="text-[11px] text-neutral-500 dark:text-neutral-400 font-medium">
+            Total ({calculatedResult.quantity} pcs):
           </div>
-          <div className="text-lg font-black text-indigo-700 dark:text-indigo-400 font-mono leading-none">
+          <div className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white font-mono leading-none">
             {formatRupiah(calculatedResult.totalPrice)}
           </div>
         </div>
 
-        {/* Quick Stepper on Mobile bar */}
-        <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700 shrink-0">
+        {/* Stepper on Mobile bar */}
+        <div className="inline-flex items-center bg-black/[0.04] dark:bg-white/[0.08] p-0.5 rounded-full border border-black/[0.04] dark:border-white/[0.06] shrink-0">
           <button
             type="button"
             onClick={() => handleUpdateCurrentQuantity(Math.max(1, calculatedResult.quantity - 1))}
             disabled={calculatedResult.quantity <= 1}
-            className="w-8 h-8 rounded-lg bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 disabled:opacity-30 flex items-center justify-center font-bold text-xs cursor-pointer shadow-2xs"
+            className="w-7 h-7 rounded-full bg-white dark:bg-[#2C2C2E] text-neutral-800 dark:text-neutral-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.1] disabled:opacity-30 flex items-center justify-center font-bold text-xs cursor-pointer shadow-2xs"
             title="Kurang 1 pcs"
           >
-            <span className="text-base leading-none">−</span>
+            <span className="text-sm leading-none">−</span>
           </button>
-          <span className="w-8 text-center font-extrabold text-slate-900 dark:text-white font-mono text-xs">
+          <span className="w-7 text-center font-bold text-neutral-900 dark:text-white font-mono text-xs">
             {calculatedResult.quantity}
           </span>
           <button
             type="button"
             onClick={() => handleUpdateCurrentQuantity(calculatedResult.quantity + 1)}
-            className="w-8 h-8 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 flex items-center justify-center font-bold text-xs cursor-pointer shadow-2xs"
+            className="w-7 h-7 rounded-full bg-white dark:bg-[#2C2C2E] text-neutral-800 dark:text-neutral-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.1] flex items-center justify-center font-bold text-xs cursor-pointer shadow-2xs"
             title="Tambah 1 pcs"
           >
-            <span className="text-base leading-none">+</span>
+            <span className="text-sm leading-none">+</span>
           </button>
         </div>
 
-        {/* WA Order Button */}
+        {/* WhatsApp Order Button */}
         <button
           type="button"
           onClick={() => setIsWhatsAppModalOpen(true)}
-          className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shrink-0 cursor-pointer"
+          className="px-4 py-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] active:scale-95 text-white font-medium text-xs flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
         >
           <Phone className="w-3.5 h-3.5" />
           <span>Pesan WA</span>
         </button>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-12 mb-16 lg:mb-0 py-8 text-xs text-slate-500 dark:text-slate-400 transition-colors">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-100 dark:border-slate-800 text-center sm:text-left">
-            <div className="flex flex-col sm:flex-row items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-xs shrink-0 flex items-center justify-center">
+      {/* Apple Minimal Footer */}
+      <footer className="border-t border-black/[0.06] dark:border-white/[0.08] mt-16 mb-20 lg:mb-0 py-10 text-xs text-neutral-500 dark:text-neutral-400 transition-colors">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-black/[0.04] dark:border-white/[0.06] text-center sm:text-left">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-black/[0.06] dark:border-white/[0.1] flex items-center justify-center shrink-0">
                 <ArataLogo className="w-full h-full object-cover" />
               </div>
-              <div>
-                <div className="flex items-center justify-center sm:justify-start gap-1.5 font-bold text-slate-900 dark:text-white text-sm">
-                  <span>Arata Price</span>
-                  <span className="px-1.5 py-0.2 rounded text-[10px] font-black bg-indigo-600 text-white">
-                    AI
-                  </span>
-                  <span className="text-slate-300 dark:text-slate-700 font-normal">|</span>
-                  <span className="text-slate-700 dark:text-slate-300 font-semibold text-xs">Arata Manufacturing</span>
+              <div className="text-left">
+                <div className="font-semibold text-neutral-900 dark:text-white text-sm">
+                  Arata Price AI
                 </div>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                  Platform Estimasi Biaya Cepat & Transparan untuk Jasa 3D Print dan Laser Engraving.
-                </p>
-                <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
-                  Tarif: PLA+ Rp 299/g • PETG Rp 499/g • Resin Rp 599/g • Laser Rp 100/m
-                </p>
-                <p className="text-[11px] text-amber-700 dark:text-amber-300 font-medium mt-1 bg-amber-50 dark:bg-amber-950/50 px-2.5 py-1 rounded-lg border border-amber-200/80 dark:border-amber-800/60 inline-block">
-                  ⚠️ Catatan: ini adalah harga jika anda pesan diluar marketplace seperti shopee. pembayaran bisa pakai qris lalu konfirmasi ke nomor 085904408774.
-                </p>
+                <div className="text-[11px] text-neutral-400">
+                  Arata Manufacturing · PT Dhafa Tetap Berusaha
+                </div>
               </div>
             </div>
 
-            <div className="text-center sm:text-right shrink-0 space-y-2">
+            <div className="flex items-center gap-3 text-xs">
               <button
                 type="button"
                 onClick={() => setIsQRISModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-slate-750 text-indigo-700 dark:text-indigo-300 font-bold text-xs border border-indigo-200 dark:border-slate-700 cursor-pointer"
+                className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white cursor-pointer"
               >
-                <QrCode className="w-3.5 h-3.5" />
-                <span>QRIS REXEL ID</span>
+                QRIS REXEL ID
               </button>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-medium border border-slate-200 dark:border-slate-700">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                Sistem Siap Operasi
-              </div>
-              <p className="text-[11px] text-slate-400 dark:text-slate-500">
-                Cocok untuk Android, iPhone, Tablet, & Windows.
-              </p>
+              <span>·</span>
+              <button
+                type="button"
+                onClick={() => setIsGuideModalOpen(true)}
+                className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white cursor-pointer"
+              >
+                Panduan Material
+              </button>
+              <span>·</span>
+              <a
+                href="https://wa.me/6285904408774"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white"
+              >
+                WhatsApp 085904408774
+              </a>
             </div>
           </div>
 
-          {/* Copyright & Entity statement */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-neutral-400 dark:text-neutral-500 text-center sm:text-left">
             <p>
-              Hak cipta milik <strong className="text-slate-700 dark:text-slate-200 font-semibold">Arata Manufacturing</strong> di bawah naungan <strong className="text-slate-700 dark:text-slate-200 font-semibold">PT Dhafa Tetap Berusaha</strong>.
+              Tarif langsung non-marketplace via QRIS REXEL ID. Konfirmasi ke nomor WhatsApp 085904408774.
             </p>
-            <p className="text-slate-400 dark:text-slate-500">
+            <p>
               © {new Date().getFullYear()} Arata Price AI. All rights reserved.
             </p>
           </div>

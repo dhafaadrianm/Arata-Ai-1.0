@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Sparkles, Phone, HelpCircle, QrCode, Moon, Sun } from 'lucide-react';
+import { Sparkles, Phone, HelpCircle, QrCode, Moon, Sun, ChevronRight } from 'lucide-react';
 import { ArataLogo } from './ArataLogo';
 
 interface NavbarProps {
@@ -16,98 +16,98 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleDarkMode,
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs transition-colors">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3.5">
-        <div className="flex items-center justify-between gap-3">
-          {/* Logo & Brand */}
+    <header className="sticky top-0 z-30 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.08] transition-colors">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16 gap-3">
+          {/* Logo & Brand Identity */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-black/[0.06] dark:border-white/[0.1] shadow-xs flex items-center justify-center shrink-0">
               <ArataLogo className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
-                  <span>Arata</span>
-                  <span className="text-indigo-600 dark:text-indigo-400">Price</span>
-                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-black bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-xs">
+                <span className="text-base sm:text-lg font-semibold tracking-tight text-neutral-900 dark:text-white flex items-center gap-1">
+                  Arata Price
+                  <span className="text-[11px] font-medium tracking-normal px-1.5 py-0.5 rounded-md bg-neutral-900 text-white dark:bg-white dark:text-black">
                     AI
                   </span>
-                </h1>
-                <span className="hidden sm:inline-flex text-[11px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60">
-                  App Jasa
+                </span>
+                <span className="hidden sm:inline-block text-[11px] font-medium text-neutral-400 dark:text-neutral-500">
+                  Precision Calculator
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                Estimasi Cetak 3D Print & Laser Engraving
+              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 font-normal leading-none hidden sm:block mt-0.5">
+                3D Printing & Laser Engraving Manufacturing
               </p>
             </div>
           </div>
 
-          {/* Quick Price Ribbon & Actions */}
+          {/* Action Toolbar */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Dark Mode Toggle Button */}
+            {/* Dark Mode Switch */}
             <button
               onClick={onToggleDarkMode}
-              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer flex items-center justify-center"
-              aria-label={isDarkMode ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Malam'}
-              title={isDarkMode ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Malam (Dark Mode)'}
+              className="w-9 h-9 rounded-full flex items-center justify-center text-neutral-600 dark:text-neutral-300 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] active:scale-95 transition-all cursor-pointer border border-black/[0.04] dark:border-white/[0.08]"
+              aria-label={isDarkMode ? 'Mode Terang' : 'Mode Gelap'}
+              title={isDarkMode ? 'Beralih ke Tampilan Terang' : 'Beralih ke Tampilan Gelap'}
             >
               {isDarkMode ? (
-                <Sun className="w-4 h-4 text-amber-400 stroke-[2.5]" />
+                <Sun className="w-4 h-4 text-amber-400 stroke-[2]" />
               ) : (
-                <Moon className="w-4 h-4 text-slate-700 stroke-[2.5]" />
+                <Moon className="w-4 h-4 text-neutral-700 stroke-[2]" />
               )}
             </button>
 
+            {/* Quick QRIS Button */}
             <button
               onClick={onOpenQRIS}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/70 hover:bg-indigo-100 dark:hover:bg-indigo-900/80 border border-indigo-200/80 dark:border-indigo-800/80 transition-colors cursor-pointer"
-              title="Bayar dengan QRIS REXEL ID"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-neutral-800 dark:text-neutral-200 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.07] dark:hover:bg-white/[0.12] active:scale-95 border border-black/[0.04] dark:border-white/[0.08] transition-all cursor-pointer"
+              title="Kode QRIS REXEL ID"
             >
-              <QrCode className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span className="hidden sm:inline">QRIS</span>
+              <QrCode className="w-3.5 h-3.5 text-neutral-600 dark:text-neutral-300" />
+              <span>QRIS</span>
             </button>
 
+            {/* Guide Button */}
             <button
               onClick={onOpenGuide}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
-              title="Panduan Pemula & Daftar Bahan"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-neutral-800 dark:text-neutral-200 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.07] dark:hover:bg-white/[0.12] active:scale-95 border border-black/[0.04] dark:border-white/[0.08] transition-all cursor-pointer"
+              title="Panduan Pemilihan Bahan"
             >
-              <HelpCircle className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span className="hidden md:inline">Panduan</span>
+              <HelpCircle className="w-3.5 h-3.5 text-neutral-600 dark:text-neutral-300" />
+              <span className="hidden sm:inline">Panduan</span>
             </button>
 
+            {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/6285904408774?text=Halo%20Arata%20Price%20AI,%20saya%20ingin%20tanya%20jasa%203D%20Print%20dan%20Laser%20Engraving"
+              href="https://wa.me/6285904408774?text=Halo%20Arata%20Price%20AI,%20saya%20ingin%20konsultasi%20jasa%203D%20Print%20atau%20Laser%20Engraving"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 border border-emerald-200 dark:border-emerald-800 transition-colors"
-              title="Konfirmasi WhatsApp ke 085904408774"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-white bg-[#0071E3] hover:bg-[#0077ED] active:scale-95 transition-all shadow-xs"
+              title="Konsultasi WhatsApp: 085904408774"
             >
               <Phone className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">WhatsApp</span>
+              <span>Kontak</span>
             </a>
           </div>
         </div>
 
-        {/* Live Price Bar (mobile & desktop friendly) */}
-        <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 overflow-x-auto text-[11px] text-slate-600 dark:text-slate-400 no-scrollbar">
-          <span className="text-slate-400 dark:text-slate-500 shrink-0 font-medium flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-amber-500" /> Tarif Resmi:
-          </span>
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-semibold border border-emerald-200/60 dark:border-emerald-800/60">
-              PLA+: Rp 299/g
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-semibold border border-amber-200/60 dark:border-amber-800/60">
-              PETG: Rp 499/g
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 font-semibold border border-purple-200/60 dark:border-purple-800/60">
-              Resin: Rp 599/g
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 font-semibold border border-rose-200/60 dark:border-rose-800/60">
-              Laser: Rp 100/m
-            </span>
+        {/* Apple-style Sub-bar with Live Standard Rates */}
+        <div className="py-2 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11px] overflow-x-auto no-scrollbar gap-4">
+          <div className="flex items-center gap-3 text-neutral-500 dark:text-neutral-400 shrink-0">
+            <span className="font-medium text-neutral-800 dark:text-neutral-200">Tarif Standar:</span>
+            <span>PLA+ <strong className="font-semibold text-neutral-900 dark:text-white">Rp 299</strong>/g</span>
+            <span className="text-neutral-300 dark:text-neutral-700">·</span>
+            <span>PETG <strong className="font-semibold text-neutral-900 dark:text-white">Rp 499</strong>/g</span>
+            <span className="text-neutral-300 dark:text-neutral-700">·</span>
+            <span>Resin <strong className="font-semibold text-neutral-900 dark:text-white">Rp 599</strong>/g</span>
+            <span className="text-neutral-300 dark:text-neutral-700">·</span>
+            <span>Laser <strong className="font-semibold text-neutral-900 dark:text-white">Rp 100</strong>/m</span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-2 text-neutral-400 dark:text-neutral-500 shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>Kalkulasi Otomatis Presisi</span>
           </div>
         </div>
       </div>

@@ -12,51 +12,56 @@ export const GuideModal: React.FC<GuideModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-colors">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md overflow-y-auto">
+      <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-2xl w-full my-auto flex flex-col shadow-2xl border border-black/[0.08] dark:border-white/[0.1] overflow-hidden transition-colors max-h-[90vh]">
         {/* Modal Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-850">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
-              <HelpCircle className="w-5 h-5" />
+        <div className="p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-2xl bg-black/[0.04] dark:bg-white/[0.08] flex items-center justify-center text-neutral-900 dark:text-white">
+              <HelpCircle className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">
-                Panduan Pemula & Daftar Harga Arata Price AI
+              <h3 className="font-semibold text-neutral-900 dark:text-white text-base">
+                Panduan Material & Tarif
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Informasi material 3D Print dan Laser Engraving
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                Informasi teknis layanan 3D Print dan Laser Engraving Arata
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition-colors cursor-pointer"
+            aria-label="Tutup"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 text-xs sm:text-sm text-slate-600 dark:text-slate-300 flex-1">
+        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 text-xs text-neutral-600 dark:text-neutral-300">
           {/* Price Table Card */}
-          <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
-            <div className="bg-slate-100 dark:bg-slate-800 px-4 py-2 font-bold text-slate-800 dark:text-slate-200 text-xs uppercase tracking-wider">
-              Daftar Tarif Resmi Layanan
+          <div className="border border-black/[0.06] dark:border-white/[0.08] rounded-2xl overflow-hidden bg-black/[0.015] dark:bg-white/[0.02]">
+            <div className="px-4 py-2.5 font-semibold text-neutral-800 dark:text-neutral-200 text-xs border-b border-black/[0.06] dark:border-white/[0.08]">
+              Daftar Tarif Layanan Resmi
             </div>
-            <div className="divide-y divide-slate-100 dark:divide-slate-800">
+            <div className="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
               {MATERIALS.map((m) => (
-                <div key={m.id} className="p-3 sm:p-4 flex items-center justify-between gap-3">
+                <div key={m.id} className="p-3.5 sm:p-4 flex items-center justify-between gap-3">
                   <div>
-                    <span className="font-bold text-slate-900 dark:text-white block">{m.name}</span>
-                    <span className="text-xs text-slate-500 dark:text-slate-400">{m.recommendedFor}</span>
+                    <span className="font-semibold text-neutral-900 dark:text-white block text-sm">
+                      {m.name}
+                    </span>
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400">
+                      {m.recommendedFor}
+                    </span>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="font-mono font-extrabold text-indigo-700 dark:text-indigo-400 text-base">
+                    <span className="font-mono font-bold text-neutral-900 dark:text-white text-base">
                       {formatRupiah(m.pricePerUnit)}
                     </span>
-                    <span className="text-xs text-slate-500 dark:text-slate-400 block font-medium">
-                      per {m.unit}
+                    <span className="text-xs text-neutral-400 dark:text-neutral-500 block">
+                      /{m.unit}
                     </span>
                   </div>
                 </div>
@@ -64,75 +69,74 @@ export const GuideModal: React.FC<GuideModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Slicer Tips for Beginners */}
-          <div className="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 rounded-xl p-4 space-y-2">
-            <h4 className="font-bold text-indigo-950 dark:text-indigo-200 flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>Cara Mendapatkan Ukuran & Berat File 3D:</span>
+          {/* Slicer Tips */}
+          <div className="bg-black/[0.02] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08] rounded-2xl p-4 space-y-2">
+            <h4 className="font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5 text-xs">
+              <CheckCircle2 className="w-4 h-4 text-[#0071E3] dark:text-[#0A84FF]" />
+              <span>Cara Mengetahui Ukuran & Berat File 3D:</span>
             </h4>
-            <ul className="list-disc list-inside space-y-1 text-xs text-indigo-900 dark:text-indigo-300 leading-relaxed">
+            <ul className="space-y-1.5 text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed pl-5 list-disc">
               <li>
-                <strong>Opsi 1 (Paling Mudah):</strong> Gunakan mode <em>"Estimasi Ukuran (P × L × T)"</em> di Arata Price. Cukup masukkan perkiraan panjang, lebar, tinggi (dalam mm), dan persentase infill. Sistem langsung mengkalkulasi berat filamennya!
+                <strong>Mode Estimasi Dimensi (P × L × T):</strong> Cukup masukkan dimensi luar part dan persentase kepadatan infill. Algoritma Arata akan menghitung perkiraan berat filamen secara otomatis.
               </li>
               <li>
-                <strong>Opsi 2 (Super Akurat):</strong> Buka software slicer (Cura, Bambu Studio, OrcaSlicer, PrusaSlicer, Chitubox). Klik <em>"Slice"</em>, lalu lihat angka berat filamen dalam <strong>gram</strong> di pojok kanan bawah. Masukkan angka tersebut di mode <em>"Input Gram Langsung"</em>.
+                <strong>Mode Gram Langsung:</strong> Jika sudah memiliki software slicer (Bambu Studio, OrcaSlicer, Cura, Chitubox), lakukan slicing dan masukkan angka berat gram filamen yang tertera untuk akurasi optimal.
               </li>
             </ul>
           </div>
 
-          {/* Material Comparison */}
+          {/* Material Comparison Cards */}
           <div className="space-y-3">
-            <h4 className="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">
-              Karakteristik Material
+            <h4 className="font-semibold text-neutral-900 dark:text-white text-xs">
+              Karakteristik & Aplikasi Material
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-xl border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/40 dark:bg-emerald-950/30">
-                <span className="font-bold text-emerald-900 dark:text-emerald-300 block mb-1 flex items-center gap-1">
-                  <Box className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> 3D Print PLA+ (Rp 299/g)
+              <div className="p-4 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02]">
+                <span className="font-semibold text-neutral-900 dark:text-white block mb-1 flex items-center gap-1.5">
+                  <Box className="w-3.5 h-3.5 text-emerald-500" /> PLA+ (Rp 299/g)
                 </span>
-                <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-                  Bahan ramah lingkungan berbasis pati jagung. Sangat mudah dicetak, minim warping, warna cerah, cocok untuk aksesoris, action figure, pot bunga, dudukan HP, & prototipe visual.
+                <p className="text-neutral-500 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  Finishing rapi, minim warping, ramah lingkungan, warna variatif. Ideal untuk prototipe visual, casing gadget, miniatur, dan display estetis.
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl border border-amber-200 dark:border-amber-800/60 bg-amber-50/40 dark:bg-amber-950/30">
-                <span className="font-bold text-amber-900 dark:text-amber-300 block mb-1 flex items-center gap-1">
-                  <Flame className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> 3D Print PETG (Rp 499/g)
+              <div className="p-4 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02]">
+                <span className="font-semibold text-neutral-900 dark:text-white block mb-1 flex items-center gap-1.5">
+                  <Flame className="w-3.5 h-3.5 text-amber-500" /> PETG (Rp 499/g)
                 </span>
-                <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-                  Bahan yang sama dengan botol minuman premium. Tahan panas hingga 75°C, tahan cuaca panas hujan luar ruangan, liat dan tidak mudah pecah. Sangat cocok untuk part otomotif & mekanik.
+                <p className="text-neutral-500 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  Tahan benturan, elastisitas tinggi, tahan panas hingga 75°C, dan tahan cuaca outdoor. Cocok untuk bracket, part mekanikal, dan komponen fungsional mesin.
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl border border-purple-200 dark:border-purple-800/60 bg-purple-50/40 dark:bg-purple-950/30">
-                <span className="font-bold text-purple-900 dark:text-purple-300 block mb-1 flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" /> 3D Print Resin (Rp 599/g)
+              <div className="p-4 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02]">
+                <span className="font-semibold text-neutral-900 dark:text-white block mb-1 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-500" /> Resin SLA (Rp 599/g)
                 </span>
-                <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-                  Menggunakan sinar UV cair (SLA/MSLA). Detail sangat mikroskopis (hingga 0.02mm), tidak memiliki garis tumpukan layer. Sangat direkomendasikan untuk miniatur anime, perhiasan, dan figur koleksi.
+                <p className="text-neutral-500 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  Presisi mikron ultra-tinggi, permukaan sangat mulus tanpa layer lines kasat mata. Terbaik untuk action figure detail, perhiasan, dan part presisi kecil.
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl border border-rose-200 dark:border-rose-800/60 bg-rose-50/40 dark:bg-rose-950/30">
-                <span className="font-bold text-rose-900 dark:text-rose-300 block mb-1 flex items-center gap-1">
-                  <Zap className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" /> Laser Engraving (Rp 100/m)
+              <div className="p-4 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02]">
+                <span className="font-semibold text-neutral-900 dark:text-white block mb-1 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-rose-500" /> Laser Engraving (Rp 100/m)
                 </span>
-                <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-                  Sinar laser presisi tinggi membakar/mengukir permukaan kayu, akrilik, kulit, atau logam cat. Biaya dihitung per meter jalur sinar laser. Cocok untuk plakat nama, souvenir, logo, & tumbler.
+                <p className="text-neutral-500 dark:text-neutral-400 text-[11px] leading-relaxed">
+                  Grafir dan pemotongan laser di media akrilik, kayu, kulit, atau anodized metal. Hasil permanen, tajam, dan elegan.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-end bg-slate-50 dark:bg-slate-850">
+        {/* Modal Footer */}
+        <div className="p-4 border-t border-black/[0.06] dark:border-white/[0.08] flex justify-end">
           <button
-            type="button"
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-slate-900 dark:bg-indigo-600 text-white font-bold text-xs hover:bg-slate-800 dark:hover:bg-indigo-700 transition-colors cursor-pointer"
+            className="px-5 py-2 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-medium text-xs hover:opacity-90 transition-opacity cursor-pointer"
           >
-            Tutup Panduan
+            Mengerti & Tutup
           </button>
         </div>
       </div>

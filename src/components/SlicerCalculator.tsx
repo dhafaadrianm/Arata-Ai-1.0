@@ -11,11 +11,9 @@ import {
   Maximize2,
   Box,
   Scale,
-  Minus,
-  Plus,
   FileText,
   Clock,
-  HelpCircle,
+  Info,
 } from 'lucide-react';
 import { estimateWeightFromDimensions, formatMinutes } from '../utils/calculator';
 import { QuantitySelector } from './QuantitySelector';
@@ -39,72 +37,70 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
     onChange({ ...data, ...fields });
   };
 
-  // Calculate live preview metrics for dimensions mode
   const dimensionEstimates = estimateWeightFromDimensions(data, material.density);
-  const currentCalculatedWeight =
-    mode === 'direct_weight' ? data.directWeight : dimensionEstimates.weightGrams;
-
   const quickGrams = [10, 25, 50, 75, 100, 200];
   const quickInfills = [10, 15, 20, 30, 50, 100];
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-xs space-y-6 transition-colors">
+    <div className="bg-white dark:bg-[#1C1C1E] rounded-3xl border border-black/[0.06] dark:border-white/[0.08] p-5 sm:p-7 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-6 transition-colors">
       {/* Header with Mode Switch */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
         <div>
-          <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-            <span>2. Informasi File & Slicer Sederhana</span>
+          <span className="text-[11px] font-semibold tracking-wider uppercase text-neutral-400 dark:text-neutral-500">
+            Langkah 2
+          </span>
+          <h2 className="text-base sm:text-lg font-semibold tracking-tight text-neutral-900 dark:text-white">
+            Spesifikasi 3D Slicer
           </h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Tentukan ukuran fisik atau masukkan langsung berat dari software slicer
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+            Simulasi dimensi fisik part atau masukkan langsung gramasi slicer
           </p>
         </div>
 
-        {/* Segmented Control Mode */}
-        <div className="inline-flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-semibold self-start sm:self-auto border border-slate-200/60 dark:border-slate-700">
+        {/* Apple Segmented Control Mode */}
+        <div className="inline-flex p-1 bg-black/[0.05] dark:bg-white/[0.08] rounded-full text-xs font-medium self-start sm:self-auto">
           <button
             type="button"
             onClick={() => onModeChange('dimensions')}
-            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
               mode === 'dimensions'
-                ? 'bg-white dark:bg-slate-700 text-indigo-700 dark:text-indigo-300 shadow-xs font-bold'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs'
+                : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
             }`}
           >
-            <Maximize2 className="w-3.5 h-3.5" />
-            <span>Estimasi Ukuran (P×L×T)</span>
+            <Maximize2 className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+            <span>Dimensi (P×L×T)</span>
           </button>
           <button
             type="button"
             onClick={() => onModeChange('direct_weight')}
-            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
               mode === 'direct_weight'
-                ? 'bg-white dark:bg-slate-700 text-indigo-700 dark:text-indigo-300 shadow-xs font-bold'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs'
+                : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
             }`}
           >
-            <Scale className="w-3.5 h-3.5" />
-            <span>Input Gram Langsung</span>
+            <Scale className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+            <span>Gram Langsung</span>
           </button>
         </div>
       </div>
 
       {/* Part / File Name Input */}
       <div>
-        <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center justify-between">
-          <span className="flex items-center gap-1.5">
-            <FileText className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" /> Nama Part / File (Opsional)
-          </span>
-          <span className="text-[11px] text-slate-400 dark:text-slate-500 font-normal">Contoh: Casing HP, Gearbox v1</span>
+        <label className="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1.5">
+          Nama Part / File 3D (Opsional)
         </label>
-        <input
-          type="text"
-          value={data.fileName}
-          onChange={(e) => update({ fileName: e.target.value })}
-          placeholder="Nama file STL / OBJ / 3MF atau keterangan part..."
-          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500"
-        />
+        <div className="relative">
+          <FileText className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={data.fileName}
+            onChange={(e) => update({ fileName: e.target.value })}
+            placeholder="Contoh: Casing HP, Bracket GoPro, Gearbox v1..."
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-black/[0.08] dark:border-white/[0.1] bg-black/[0.02] dark:bg-white/[0.04] focus:bg-white dark:focus:bg-[#2C2C2E] focus:outline-none focus:ring-2 focus:ring-[#0071E3]/20 focus:border-[#0071E3] text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 transition-all"
+          />
+        </div>
       </div>
 
       {/* MODE A: DIMENSIONS SLICER SIMULATOR */}
@@ -113,21 +109,20 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
           {/* Dimension Inputs (X, Y, Z in mm) */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                <Box className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                <span>Dimensi Luar File (Milimeter / mm)</span>
+              <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+                <Box className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+                <span>Dimensi Luar Part (Milimeter / mm)</span>
               </label>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+              <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
                 10 mm = 1 cm
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2.5 sm:gap-4">
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
               {/* Length X */}
-              <div className="bg-slate-50 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700">
-                <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-bold text-slate-700 dark:text-slate-200">Panjang (X)</span>
-                  <span className="text-slate-400 dark:text-slate-500 font-mono text-[11px]">mm</span>
+              <div className="bg-black/[0.02] dark:bg-white/[0.04] p-3 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] text-center">
+                <div className="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 mb-1">
+                  Panjang (X)
                 </div>
                 <input
                   type="number"
@@ -135,18 +130,17 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
                   max="1000"
                   value={data.lengthX || ''}
                   onChange={(e) => update({ lengthX: Math.max(1, Number(e.target.value) || 0) })}
-                  className="w-full font-bold text-base text-slate-900 dark:text-white bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-center font-mono"
+                  className="w-full font-semibold text-lg text-neutral-900 dark:text-white bg-transparent focus:outline-none text-center font-mono"
                 />
-                <span className="block text-center text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                <span className="block text-[11px] text-neutral-400 dark:text-neutral-500 mt-0.5">
                   {(data.lengthX / 10).toFixed(1)} cm
                 </span>
               </div>
 
               {/* Width Y */}
-              <div className="bg-slate-50 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700">
-                <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-bold text-slate-700 dark:text-slate-200">Lebar (Y)</span>
-                  <span className="text-slate-400 dark:text-slate-500 font-mono text-[11px]">mm</span>
+              <div className="bg-black/[0.02] dark:bg-white/[0.04] p-3 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] text-center">
+                <div className="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 mb-1">
+                  Lebar (Y)
                 </div>
                 <input
                   type="number"
@@ -154,18 +148,17 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
                   max="1000"
                   value={data.widthY || ''}
                   onChange={(e) => update({ widthY: Math.max(1, Number(e.target.value) || 0) })}
-                  className="w-full font-bold text-base text-slate-900 dark:text-white bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-center font-mono"
+                  className="w-full font-semibold text-lg text-neutral-900 dark:text-white bg-transparent focus:outline-none text-center font-mono"
                 />
-                <span className="block text-center text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                <span className="block text-[11px] text-neutral-400 dark:text-neutral-500 mt-0.5">
                   {(data.widthY / 10).toFixed(1)} cm
                 </span>
               </div>
 
               {/* Height Z */}
-              <div className="bg-slate-50 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700">
-                <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-bold text-slate-700 dark:text-slate-200">Tinggi (Z)</span>
-                  <span className="text-slate-400 dark:text-slate-500 font-mono text-[11px]">mm</span>
+              <div className="bg-black/[0.02] dark:bg-white/[0.04] p-3 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] text-center">
+                <div className="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 mb-1">
+                  Tinggi (Z)
                 </div>
                 <input
                   type="number"
@@ -173,9 +166,9 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
                   max="1000"
                   value={data.heightZ || ''}
                   onChange={(e) => update({ heightZ: Math.max(1, Number(e.target.value) || 0) })}
-                  className="w-full font-bold text-base text-slate-900 dark:text-white bg-white dark:bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-center font-mono"
+                  className="w-full font-semibold text-lg text-neutral-900 dark:text-white bg-transparent focus:outline-none text-center font-mono"
                 />
-                <span className="block text-center text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                <span className="block text-[11px] text-neutral-400 dark:text-neutral-500 mt-0.5">
                   {(data.heightZ / 10).toFixed(1)} cm
                 </span>
               </div>
@@ -185,17 +178,19 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
           {/* Model Geometry / Shape Type */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                Tipe Karakteristik Bentuk Model
+              <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">
+                Karakteristik Bentuk Geometri
               </label>
-              <span className="text-[11px] text-slate-400 dark:text-slate-500">Mempengaruhi kepadatan rongga</span>
+              <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
+                Pengaruh rongga model
+              </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {[
-                { id: 'standard', label: 'Standar / Umum', desc: 'Kotak / part biasa' },
-                { id: 'mechanical', label: 'Padat / Mekanikal', desc: 'Bracket, gear padat' },
-                { id: 'organic', label: 'Organik / Figure', desc: 'Patung, miniatur lekuk' },
-                { id: 'hollow', label: 'Cangkang / Rongga', desc: 'Case, pot, vas kosong' },
+                { id: 'standard', label: 'Standar', desc: 'Bentuk umum / kotak' },
+                { id: 'mechanical', label: 'Mekanikal', desc: 'Bracket & part fungsional' },
+                { id: 'organic', label: 'Organik', desc: 'Figurin & miniatur lekuk' },
+                { id: 'hollow', label: 'Rongga', desc: 'Case & silinder cangkang' },
               ].map((geom) => {
                 const isSelected = data.geometryType === geom.id;
                 return (
@@ -203,33 +198,37 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
                     key={geom.id}
                     type="button"
                     onClick={() => update({ geometryType: geom.id as ModelGeometryType })}
-                    className={`p-2.5 rounded-xl text-left border text-xs transition-all cursor-pointer ${
+                    className={`p-3 rounded-2xl text-left border transition-all cursor-pointer ${
                       isSelected
-                        ? 'border-indigo-600 dark:border-indigo-500 bg-indigo-50/70 dark:bg-indigo-950/60 text-indigo-950 dark:text-indigo-200 font-bold ring-1 ring-indigo-500'
-                        : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 hover:bg-slate-100/60 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
+                        ? 'border-transparent ring-2 ring-[#0071E3] dark:ring-[#0A84FF] bg-black/[0.02] dark:bg-white/[0.04]'
+                        : 'border-black/[0.06] dark:border-white/[0.08] hover:border-black/[0.12] dark:hover:border-white/[0.15] bg-transparent'
                     }`}
                   >
-                    <div className="font-semibold text-[13px]">{geom.label}</div>
-                    <div className="text-[10px] text-slate-500 dark:text-slate-400 font-normal mt-0.5">{geom.desc}</div>
+                    <div className="font-medium text-xs text-neutral-900 dark:text-white">
+                      {geom.label}
+                    </div>
+                    <div className="text-[11px] text-neutral-400 dark:text-neutral-500 mt-0.5 leading-snug">
+                      {geom.desc}
+                    </div>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Infill Percentage Slider & Presets */}
-          <div className="bg-slate-50/80 dark:bg-slate-800/80 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-700 space-y-3">
+          {/* Infill Density Slider */}
+          <div className="bg-black/[0.02] dark:bg-white/[0.04] p-4 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                  <Sliders className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                  <span>Infill Density (Kepadatan Dalam)</span>
+                <label className="text-xs font-medium text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5">
+                  <Sliders className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+                  <span>Infill Density (Kepadatan Rongga)</span>
                 </label>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Standar pajangan: 15-20%. Part kuat fungsional: 30-50%.
+                <p className="text-[11px] text-neutral-400 dark:text-neutral-500 mt-0.5">
+                  Display: 15-20% · Part mekanis fungsional: 30-50%
                 </p>
               </div>
-              <span className="text-base font-extrabold text-indigo-600 dark:text-indigo-400 font-mono bg-indigo-100/80 dark:bg-indigo-950 px-2.5 py-0.5 rounded-lg border border-indigo-200/50 dark:border-indigo-850">
+              <span className="text-sm font-semibold text-neutral-900 dark:text-white font-mono px-2 py-0.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.08]">
                 {data.infillPercent}%
               </span>
             </div>
@@ -242,21 +241,23 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
               step="5"
               value={data.infillPercent}
               onChange={(e) => update({ infillPercent: Number(e.target.value) })}
-              className="w-full accent-indigo-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg"
+              className="w-full accent-[#0071E3] cursor-pointer h-1.5 bg-black/[0.08] dark:bg-white/[0.15] rounded-lg"
             />
 
-            {/* Quick Infill Chips */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium mr-1">Preset cepat:</span>
+            {/* Infill Segment Chips */}
+            <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+              <span className="text-[11px] text-neutral-400 dark:text-neutral-500 mr-1">
+                Pilihan cepat:
+              </span>
               {quickInfills.map((val) => (
                 <button
                   key={val}
                   type="button"
                   onClick={() => update({ infillPercent: val })}
-                  className={`text-xs px-2.5 py-1 rounded-md font-semibold transition-all cursor-pointer ${
+                  className={`text-xs px-2.5 py-1 rounded-full font-medium transition-all cursor-pointer ${
                     data.infillPercent === val
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      ? 'bg-neutral-900 text-white dark:bg-white dark:text-black shadow-xs'
+                      : 'bg-black/[0.04] dark:bg-white/[0.08] text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
                   }`}
                 >
                   {val}%
@@ -265,31 +266,31 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
             </div>
           </div>
 
-          {/* Slicer Real-Time Simulation Result Bar */}
-          <div className="p-3.5 rounded-xl bg-gradient-to-r from-indigo-50 via-blue-50 to-slate-50 dark:from-slate-800 dark:via-indigo-950/40 dark:to-slate-850 border border-indigo-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+          {/* Slicer Live Output Metric Tile */}
+          <div className="p-4 rounded-2xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                <Scale className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.1] text-neutral-800 dark:text-neutral-200 flex items-center justify-center shrink-0 shadow-xs">
+                <Scale className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-[11px] font-semibold text-indigo-900 dark:text-indigo-300 tracking-wide uppercase">
-                  Hasil Estimasi Berat Slicer
+                <span className="text-[11px] font-medium text-neutral-400 dark:text-neutral-500">
+                  Hasil Estimasi Filamen
                 </span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-xl font-extrabold text-indigo-700 dark:text-indigo-400 font-mono">
+                  <span className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono">
                     ~{dimensionEstimates.weightGrams}
                   </span>
-                  <span className="text-xs font-semibold text-indigo-900 dark:text-indigo-300">gram</span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 ml-2">
-                    (Vol: {dimensionEstimates.volumeCm3} cm³)
+                  <span className="text-xs text-neutral-500 dark:text-neutral-400">gram</span>
+                  <span className="text-xs text-neutral-400 dark:text-neutral-500 ml-2 hidden sm:inline">
+                    · Vol {dimensionEstimates.volumeCm3} cm³
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 bg-white/80 dark:bg-slate-900/80 px-2.5 py-1 rounded-lg border border-indigo-100/60 dark:border-slate-700">
-              <Clock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span>Est. Waktu: ~{formatMinutes(dimensionEstimates.estimatedMinutes)}</span>
+            <div className="flex items-center gap-1.5 text-xs text-neutral-600 dark:text-neutral-300">
+              <Clock className="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-500" />
+              <span>Est. ~{formatMinutes(dimensionEstimates.estimatedMinutes)}</span>
             </div>
           </div>
         </div>
@@ -298,43 +299,43 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
       {/* MODE B: DIRECT WEIGHT INPUT */}
       {mode === 'direct_weight' && (
         <div className="space-y-4">
-          <div className="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-3">
+          <div className="bg-black/[0.02] dark:bg-white/[0.04] p-5 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <Scale className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                <span>Masukkan Berat Filament / Resin (Gram)</span>
+              <label className="text-xs font-medium text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5">
+                <Scale className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+                <span>Berat Filamen / Resin Terpotong (Gram)</span>
               </label>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                Lihat di Bambu Studio / Cura / Chitubox
+              <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
+                Dari software Bambu Studio / Cura / Chitubox
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="relative flex-1">
-                <input
-                  type="number"
-                  min="1"
-                  step="0.1"
-                  value={data.directWeight || ''}
-                  onChange={(e) => update({ directWeight: Math.max(0, Number(e.target.value) || 0) })}
-                  placeholder="0.0"
-                  className="w-full px-4 py-3 text-2xl font-extrabold text-slate-900 dark:text-white font-mono bg-white dark:bg-slate-900 rounded-xl border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400 dark:text-slate-500">
-                  GRAM
-                </span>
-              </div>
+            <div className="relative">
+              <input
+                type="number"
+                min="1"
+                step="0.1"
+                value={data.directWeight || ''}
+                onChange={(e) => update({ directWeight: Math.max(0, Number(e.target.value) || 0) })}
+                placeholder="0"
+                className="w-full px-4 py-3 text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono bg-white dark:bg-[#2C2C2E] rounded-xl border border-black/[0.08] dark:border-white/[0.1] focus:outline-none focus:ring-2 focus:ring-[#0071E3]/20 focus:border-[#0071E3] transition-all"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-neutral-400 dark:text-neutral-500">
+                GRAM
+              </span>
             </div>
 
             {/* Quick Grams Chips */}
-            <div className="flex items-center gap-2 flex-wrap pt-1">
-              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Contoh berat:</span>
+            <div className="flex items-center gap-1.5 flex-wrap pt-1">
+              <span className="text-[11px] text-neutral-400 dark:text-neutral-500 mr-1">
+                Contoh berat:
+              </span>
               {quickGrams.map((gram) => (
                 <button
                   key={gram}
                   type="button"
                   onClick={() => update({ directWeight: gram })}
-                  className="px-2.5 py-1 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer"
+                  className="px-3 py-1 rounded-full text-xs font-medium bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                 >
                   {gram}g
                 </button>
@@ -342,22 +343,22 @@ export const SlicerCalculator: React.FC<SlicerCalculatorProps> = ({
             </div>
           </div>
 
-          <div className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300 bg-amber-50/60 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/60 p-3 rounded-xl">
-            <HelpCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-            <p>
-              <strong>Tips Pelanggan:</strong> Anda bisa memotong file (.STL) di software slicer favorit Anda (Cura, Bambu Studio, OrcaSlicer, Chitubox). Masukkan nilai gram filamen yang tertera di sana untuk hasil yang 100% presisi.
+          <div className="flex items-start gap-2.5 text-xs text-neutral-600 dark:text-neutral-400 bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06] p-3.5 rounded-2xl">
+            <Info className="w-4 h-4 text-neutral-400 shrink-0 mt-0.5" />
+            <p className="leading-relaxed">
+              Anda dapat mengiris model (.STL) di software slicer Anda untuk mendapatkan berat akurat hingga desimal, lalu masukkan angka tersebut di sini.
             </p>
           </div>
         </div>
       )}
 
-      {/* Quantity Selector */}
-      <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+      {/* Quantity Stepper */}
+      <div className="pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
         <QuantitySelector
           value={data.quantity}
           onChange={(qty) => update({ quantity: qty })}
-          label="Jumlah Cetak 3D (Kuantiti)"
-          sublabel="Tentukan berapa pcs part yang ingin dicetak"
+          label="Jumlah Part (Kuantiti)"
+          sublabel="Tentukan berapa pcs part yang akan diproduksi"
         />
       </div>
     </div>

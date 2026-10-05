@@ -14,8 +14,8 @@ interface QuantitySelectorProps {
 export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   value,
   onChange,
-  label = 'Jumlah Pesanan (Pcs)',
-  sublabel = 'Berapa banyak part yang ingin dibuat?',
+  label = 'Jumlah Pesanan',
+  sublabel = 'Tentukan kuantiti part',
   min = 1,
   max = 9999,
   showQuickButtons = true,
@@ -40,59 +40,63 @@ export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   };
 
   return (
-    <div className="bg-slate-50/90 dark:bg-slate-800/80 rounded-2xl border border-slate-200/90 dark:border-slate-700/80 p-4 sm:p-5 space-y-3.5 transition-colors">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+    <div className="bg-black/[0.02] dark:bg-white/[0.04] rounded-2xl border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 space-y-3 transition-colors">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <label className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-            <span>{label}</span>
-            <span className="px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 text-[11px] font-extrabold font-mono border border-indigo-200/50 dark:border-indigo-800/60">
-              {value} PCS
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold text-neutral-900 dark:text-white">
+              {label}
             </span>
-          </label>
-          {sublabel && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{sublabel}</p>}
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 font-mono">
+              ({value} pcs)
+            </span>
+          </div>
+          {sublabel && (
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+              {sublabel}
+            </p>
+          )}
         </div>
 
-        {/* Stepper with Large Buttons */}
-        <div className="flex items-center gap-1.5 self-start sm:self-auto bg-white dark:bg-slate-900 p-1 rounded-xl border-2 border-indigo-200/80 dark:border-indigo-800/80 shadow-xs">
+        {/* Apple Style Stepper Capsule */}
+        <div className="inline-flex items-center bg-white dark:bg-[#2C2C2E] rounded-full p-1 border border-black/[0.08] dark:border-white/[0.1] shadow-xs self-start sm:self-auto">
           <button
             type="button"
             onClick={handleDecrement}
             disabled={value <= min}
             aria-label="Kurang 1 pcs"
-            className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:bg-slate-300 dark:active:bg-slate-600 text-slate-700 dark:text-slate-200 disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-700 dark:text-neutral-200 hover:bg-black/[0.05] dark:hover:bg-white/[0.1] active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
           >
-            <Minus className="w-5 h-5 stroke-[2.5]" />
+            <Minus className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
 
-          <div className="relative">
-            <input
-              type="number"
-              min={min}
-              max={max}
-              value={value}
-              onChange={handleInputChange}
-              aria-label="Input jumlah pcs"
-              className="w-16 sm:w-20 h-10 text-center font-mono font-black text-lg sm:text-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg bg-transparent"
-            />
-          </div>
+          <input
+            type="number"
+            min={min}
+            max={max}
+            value={value}
+            onChange={handleInputChange}
+            aria-label="Jumlah pcs"
+            className="w-14 sm:w-16 text-center font-mono font-bold text-sm sm:text-base text-neutral-900 dark:text-white focus:outline-none bg-transparent"
+          />
 
           <button
             type="button"
             onClick={handleIncrement}
             disabled={value >= max}
             aria-label="Tambah 1 pcs"
-            className="w-10 h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white flex items-center justify-center transition-colors cursor-pointer shadow-2xs"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-700 dark:text-neutral-200 hover:bg-black/[0.05] dark:hover:bg-white/[0.1] active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
           >
-            <Plus className="w-5 h-5 stroke-[2.5]" />
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
           </button>
         </div>
       </div>
 
-      {/* Quick Pcs Badges */}
+      {/* Quick Pcs Capsule Chips */}
       {showQuickButtons && (
-        <div className="pt-2 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center gap-1.5 flex-wrap">
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mr-1">
-            Pilih Cepat:
+        <div className="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center gap-1.5 flex-wrap">
+          <span className="text-[11px] font-medium text-neutral-400 dark:text-neutral-500 mr-1">
+            Pilih cepat:
           </span>
           {quickPcs.map((qty) => {
             const isSelected = value === qty;
@@ -101,13 +105,13 @@ export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
                 key={qty}
                 type="button"
                 onClick={() => onChange(qty)}
-                className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`text-xs px-2.5 py-1 rounded-full font-medium font-mono transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-indigo-600 text-white shadow-xs scale-105 ring-2 ring-indigo-600/30'
-                    : 'bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-600'
+                    ? 'bg-neutral-900 text-white dark:bg-white dark:text-black shadow-xs'
+                    : 'bg-black/[0.04] dark:bg-white/[0.08] text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
                 }`}
               >
-                {qty} pcs
+                {qty}
               </button>
             );
           })}
