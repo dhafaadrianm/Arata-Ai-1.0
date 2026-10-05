@@ -397,8 +397,8 @@ export default function App() {
                 <div className="font-semibold text-neutral-900 dark:text-white text-sm">
                   Arata Price AI
                 </div>
-                <div className="text-[11px] text-neutral-400">
-                  Arata Manufacturing · PT Dhafa Tetap Berusaha
+                <div className="text-[11px] text-neutral-500 dark:text-neutral-400">
+                  Dikembangkan oleh <strong className="font-medium text-neutral-700 dark:text-neutral-300">PT DHAFA TETAP BERUSAHA</strong>
                 </div>
               </div>
             </div>
@@ -433,7 +433,7 @@ export default function App() {
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-neutral-400 dark:text-neutral-500 text-center sm:text-left">
             <p>
-              Tarif langsung non-marketplace via QRIS REXEL ID. Konfirmasi ke nomor WhatsApp 085904408774.
+              Arata Price AI dikembangkan oleh <strong className="font-medium text-neutral-600 dark:text-neutral-300">PT DHAFA TETAP BERUSAHA</strong>.
             </p>
             <p>
               © {new Date().getFullYear()} Arata Price AI. All rights reserved.
